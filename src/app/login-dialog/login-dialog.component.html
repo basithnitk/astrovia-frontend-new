@@ -1,0 +1,6 @@
+<div>
+    <mat-form-field>
+        <input #pp type="password" matInput formControlName="passphrase" placeholder="Passphrase">
+    </mat-form-field>
+    <button type="submit" mat-raised-button color="primary" [mat-dialog-close]="pp.value">Login</button>
+</div>

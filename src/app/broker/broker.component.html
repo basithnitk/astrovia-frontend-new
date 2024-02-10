@@ -1,0 +1,28 @@
+<div class="form-container">
+  <h2>Transfer Shares</h2>
+  <form [formGroup]="form">
+    <input type="hidden" formControlName="$key" />
+    <mat-form-field>
+      <input formControlName="from" matInput placeholder="From" />
+    </mat-form-field>
+    <mat-form-field>
+      <input formControlName="to" matInput placeholder="To" />
+    </mat-form-field>
+    <mat-form-field>
+      <input type="number" formControlName="qty" matInput placeholder="Quantity" />
+    </mat-form-field>
+    <mat-form-field>
+      <input type="number" formControlName="price" matInput placeholder="Price" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select formControlName="ticker" placeholder="Stock">
+        <ng-container *ngFor="let stock of stockList">
+          <mat-option value="{{stock.ticker}}">{{stock.stockName}}<span style="float:right; margin-right:12px">{{stock.stockPrice}}</span></mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+    <p>Amount: {{ (form.value.qty * form.value.price) | currency : "INR" : "symbol" : ".0-0" }}</p>
+    
+    <button type="button" [disabled]="(isMarketClosed || form.invalid)" mat-raised-button color="accent" (click)="reviewTrade()">Review Trade</button>
+  </form>
+</div>

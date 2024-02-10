@@ -1,0 +1,15 @@
+<div class="dialog-container">
+  <h3>Trade Summary</h3>
+  <pre style="font-family: sans-serif">
+    From: {{ data.from }}  
+    To: {{ data.to }}
+    Quantity: {{ data.qty }}
+    Price: {{ data.price }}
+    Amount: {{
+      data.qty * data.price | currency : "INR" : "symbol" : ".0-0"
+    }}
+    Stock: {{ data.ticker }}
+  </pre>
+  <button mat-flat-button color="warn" [mat-dialog-close]="false">Go back</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="true">Execute</button>
+</div>

@@ -1,0 +1,12 @@
+<div class="form-container">
+  <form *ngIf="form!=undefined" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field *ngFor="let stock of stocks">
+      <input
+        matInput
+        formControlName="{{ stock.ticker }}"
+        placeholder="{{ stock.stockName }}"
+      />
+    </mat-form-field>
+    <button mat-stroked-button color="primary" type="submit">Submit</button>
+  </form>
+</div>
