@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import { BackendService } from '../../shared/backend.service';
 import { Portfolio } from '../../portfolio.model';
@@ -6,7 +6,7 @@ import { Portfolio } from '../../portfolio.model';
 import enIN from "@angular/common/locales/en-IN";
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
+
 registerLocaleData(enIN, 'en-IN');
 
 @Component({
@@ -14,9 +14,8 @@ registerLocaleData(enIN, 'en-IN');
   templateUrl: './statement.component.html',
   styleUrls: ['./statement.component.css']
 })
-export class StatementComponent implements OnInit, AfterViewInit {
-  
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+export class StatementComponent implements OnInit {
+
   portfolioList: MatTableDataSource<Portfolio>;
   @ViewChild(MatSort) set matSort(sort: MatSort) {
     if (!this.portfolioList.sort) {
@@ -30,22 +29,18 @@ export class StatementComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.backend.getStatement().subscribe(
       list => {
-        if (Array.isArray(list) && list.every(item => typeof item === 'object'))
+        if (Array.isArray(list) && list.every(item => typeof item === 'object')) {
           this.portfolioList = new MatTableDataSource(list);
+          this.portfolioList.sortingDataAccessor = (item, property) => {
+            switch (property) {
+              case 'networth':
+                return item.position + item.cashBalance;
+              default:
+                return item[property];
+            }
+          }
+        }
       }
     );
-    // this.portfolioList.sort = this.sort;
-    this.portfolioList.paginator = this.paginator;
-  }
-
-  ngAfterViewInit(){
-    this.portfolioList.sortingDataAccessor = (item, property) => {
-      switch (property) {
-          case 'networth':
-              return item.position + item.cashBalance;
-          default:
-              return item[property];
-      }
-    }
   }
 }
