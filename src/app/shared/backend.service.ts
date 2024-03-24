@@ -6,7 +6,7 @@ import { Trade } from '../broker/trade.model';
   providedIn: 'root'
 })
 export class BackendService {
-  private baseUrl: string = `https://astrovia-backend.onrender.com/`;
+  private baseUrl: string = `http://localhost:8080/`;
   private reportUrl: string = `${this.baseUrl}admin/generateReport`;
   private tradeUrl: string = `${this.baseUrl}broker/trade`;
   private stockListUrl: string = `${this.baseUrl}broker/stocks`;
