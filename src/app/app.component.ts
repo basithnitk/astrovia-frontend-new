@@ -22,7 +22,7 @@ export class AppComponent {
   openLoginDialog() {
     this.dialogService.openLoginDialog()
       .afterClosed().subscribe(ad => {
-        if (ad === "admin")
+        if (ad === "@dmin@68")
           this.admin = true;
         if (ad === "broker")
           this.broker = true;
